@@ -1,0 +1,30 @@
+<div class="container">
+    <div routerLink="home/" style="cursor: pointer;">
+        <mat-icon class="mat-18" style="color: white;">arrow_back</mat-icon>
+    </div>
+
+    <div style="border-bottom: 1px solid white; color: white;" class="text-right">
+        <h6>¿Qué deseas pedir?</h6>
+    </div>
+
+    <div class="mx-3 mt-4" style="color: white;">
+        <mat-form-field style="width: 100%;" appearance="outline" color="accent">
+            <mat-label>Descripción del pedido</mat-label>
+            <textarea cdkAutosizeMinRows="5" cdkTextareaAutosize matInput ></textarea>
+        </mat-form-field>
+    </div>
+
+    <div class="mx-3 mt-1 d-flex align-items-center" style="color: white;">
+        <label class="mr-3 mb-0">Agregar imagen: </label>
+        <button mat-mini-fab color="accent" style="outline: none;">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <div class="mx-3 mt-4 d-flex justify-content-end" style="color: white;">
+        <button mat-raised-button color="accent" style="outline: none;">
+            Continuar
+            <mat-icon>forward</mat-icon>
+        </button>
+    </div>
+</div>

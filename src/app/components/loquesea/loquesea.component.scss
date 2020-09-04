@@ -1,0 +1,26 @@
+::ng-deep .mat-form-field-label {
+    color: white !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white;
+}
+
+::ng-deep .mat-form-field-outline .mat-focused {
+    color: white;
+}
+
+//mat-input focused color
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: white!important;
+}
+
+.my-card {
+    background-color: green;
+    transition: transform .2s;
+  }
+  
+  .my-card:hover {
+    transform: scale(1.1);
+    font-weight: 900;
+  }
