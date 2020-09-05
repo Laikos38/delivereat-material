@@ -19,4 +19,9 @@ export class LocalizerService {
     )
   );
   }
-}
+
+  getCoords(street: string, number: number, city: string) {
+    console.log(street);
+    return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+${street}+${city}&key=${this.apiKey}`);
+  }
+  }

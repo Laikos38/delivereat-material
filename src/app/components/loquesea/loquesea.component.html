@@ -80,13 +80,9 @@
   </div>
 </div>
 
-<div class="container" *ngIf="modo == 2">
-  <mat-icon
-    (click)="ngOnInit()"
-    class="mat-18"
-    style="color: white; cursor: pointer"
-    >arrow_back</mat-icon
-  >
+<div class="container" *ngIf="modo==2 || modo==3">
+
+    <mat-icon (click)="ngOnInit()" class="mat-18" style="color: white; cursor: pointer">arrow_back</mat-icon>
 
   <div style="border-bottom: 1px solid white; color: white" class="text-right">
     <h6>Seleccionar {{ seleccionar }}</h6>
@@ -107,55 +103,61 @@
       </mat-select>
     </mat-form-field>
 
-    <div class="row">
-      <div class="col-8">
-        <mat-form-field
-          style="width: 100%; color: white"
-          appearance="outline"
-          color="accent"
-        >
-          <mat-label>Calle *</mat-label>
-          <input formControlName="Calle" matInput />
-          <mat-error
-            *ngIf="
-              formDirLocal.controls.Calle.invalid &&
-              (formDirLocal.controls.Calle.dirty ||
-                formDirLocal.controls.Calle.touched)
-            "
-          >
-            <mat-error *ngIf="formDirLocal.controls.Calle.errors.required">
-              Campo <strong>requerido</strong>
-            </mat-error>
-            <mat-error *ngIf="formDirLocal.controls.Calle.errors.maxlength">
-              Demasiados <strong>caracteres</strong>
-            </mat-error>
-          </mat-error>
+    <form [formGroup]='formDirLocal'>
+        <mat-form-field class="mt-4" style="width: 100%; color: white" appearance="outline" color="accent">
+            <mat-label>Ciudad *</mat-label>
+            <mat-select #comboCity formControlName="Ciudad" style="color:white">
+                <mat-option *ngFor="let ciudad of cities" [value]="ciudad.value">
+                    {{ciudad.city}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
-      </div>
-      <div class="col-4">
-        <mat-form-field
-          style="width: 100%; color: white"
-          appearance="outline"
-          color="accent"
-        >
-          <mat-label>Número *</mat-label>
-          <input formControlName="Numero" matInput />
-          <mat-error
-            *ngIf="
-              formDirLocal.controls.Numero.invalid &&
-              (formDirLocal.controls.Numero.dirty ||
-                formDirLocal.controls.Numero.touched)
-            "
-          >
-            <mat-error *ngIf="formDirLocal.controls.Numero.errors.required">
-              Campo <strong>requerido</strong>
-            </mat-error>
-            <mat-error *ngIf="formDirLocal.controls.Numero.errors.pattern">
-              Número <strong>inválido</strong>
-            </mat-error>
-          </mat-error>
+
+        <div class="row">
+            <div class="col-8">
+                <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+                    <mat-label>Calle *</mat-label>
+                    <input #inputStreet formControlName="Calle" matInput>
+                    <mat-error *ngIf="formDirLocal.controls.Calle.invalid && (formDirLocal.controls.Calle.dirty || formDirLocal.controls.Calle.touched)">
+                        <mat-error *ngIf="formDirLocal.controls.Calle.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formDirLocal.controls.Calle.errors.maxlength">
+                            Demasiados <strong>caracteres</strong>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+                    <mat-label>Número *</mat-label>
+                    <input #inputNumber formControlName="Numero" matInput>
+                    <mat-error *ngIf="formDirLocal.controls.Numero.invalid && (formDirLocal.controls.Numero.dirty || formDirLocal.controls.Numero.touched)">
+                        <mat-error *ngIf="formDirLocal.controls.Numero.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formDirLocal.controls.Numero.errors.pattern">
+                            Número <strong>inválido</strong>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+            <mat-label>Referencia</mat-label>
+            <input formControlName="Descripcion" matInput>
         </mat-form-field>
-      </div>
+    </form>
+    <div class="mt-4" style="color: white;">
+        <agm-map (mapClick)="addMarker($event)" [latitude]="mapLat" [longitude]="mapLong" [zoom]="15">
+            <agm-marker [latitude]="marker.lat" [longitude]="marker.long" [visible]="markerVisible"></agm-marker>
+        </agm-map>
+    </div>
+    <div class="mx-3 mt-5 d-flex justify-content-end" style="color: white;">
+        <button mat-raised-button color="accent" style="outline: none;" (click)="cambiarModo('select_destino')">
+            Continuar
+            <mat-icon>forward</mat-icon>
+        </button>
     </div>
     <mat-form-field
       style="width: 100%; color: white"
