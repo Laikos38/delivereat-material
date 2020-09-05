@@ -19,6 +19,11 @@ export class LoqueseaComponent implements OnInit {
   formLoQueSea: FormGroup;
   formDirLocal: FormGroup;
   marker: Marker;
+  mapLat: number;
+  mapLong: number;
+  markerVisible = true;
+  ciudadOrigen: number;
+
   cities: City[] = [
     {city: 'Ciudad de Córdoba', value: 1},
     {city: 'Las Varillas', value: 2},
@@ -35,6 +40,8 @@ export class LoqueseaComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private localizer: LocalizerService) { }
 
   ngOnInit() {
+    this.mapLat = -31.4255279;
+    this.mapLong = -64.18481;
     this.marker = new Marker();
     this.modo = Modo.PideLoQueSea;
     this.formLoQueSea = this.formBuilder.group({
@@ -45,6 +52,41 @@ export class LoqueseaComponent implements OnInit {
       Calle: ['', [Validators.required, Validators.maxLength(255)]],
       Numero: ['', [Validators.required, Validators.pattern('[0-9]{1,7}')]],
       Descripcion: ['', [Validators.maxLength(255)]]
+    });
+
+    this.formDirLocal.valueChanges.subscribe( resp => {
+      this.getCoords();
+    });
+
+  }
+
+  getCoords() {
+    const street = this.formDirLocal.controls.Calle.value;
+    const sNumber = this.formDirLocal.controls.Numero.value;
+    const cityValue = this.formDirLocal.controls.Ciudad.value;
+    let cityName: string;
+    if (this.formDirLocal.invalid) { return; }
+    for (const city of this.cities) {
+      if (city.value === cityValue) {
+        cityName = city.city;
+        break;
+      }
+    }
+
+    this.localizer.getCoords(street, sNumber, cityName).subscribe( (resp: any) => {
+
+      if (resp.status === 'ZERO_RESULTS') {
+        this.markerVisible = false;
+        return; }
+      if (resp.results[0].partial_match) {
+        this.markerVisible = false;
+        return; }
+      this.markerVisible = true;
+      this.marker.lat = resp.results[0].geometry.location.lat;
+      this.marker.long = resp.results[0].geometry.location.lng;
+      this.mapLat = this.marker.lat;
+      this.mapLong = this.marker.long;
+
     });
 
 
@@ -63,8 +105,7 @@ export class LoqueseaComponent implements OnInit {
           break;
         }
       }
-      const x = this.validarCiudad(address);
-      if ( x === 0) {
+      if ( this.validarCiudad(address) === 0) {
         return;
       }
       this.marker.lat = coords.lat;
@@ -77,7 +118,15 @@ export class LoqueseaComponent implements OnInit {
   }
 
   validarCiudad(address: Address): number {
-    for (let city of this.cities) {
+    if (this.modo === Modo.SeleccionarDestino) {
+      for (const city of this.cities) {
+        if (address.city === city.city && city.value === this.ciudadOrigen) {
+          return city.value;
+        }
+        return 0;
+      }
+    }
+    for (const city of this.cities) {
       if (address.city === city.city) {
         return city.value;
       }
@@ -137,8 +186,13 @@ export class LoqueseaComponent implements OnInit {
         if (this.formDirLocal.invalid) {
           return;
         }
+        this.ciudadOrigen = this.formDirLocal.controls.Ciudad.value;
         this.modo = Modo.SeleccionarDestino;
         this.seleccionar = 'destino';
+        this.formDirLocal.reset();
+        this.formDirLocal.controls.Ciudad.setValue(this.ciudadOrigen);
+        this.formDirLocal.controls.Ciudad.disable();
+        this.markerVisible = false;
         break;
       }
       default: {

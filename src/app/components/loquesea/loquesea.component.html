@@ -47,7 +47,7 @@
     </div>
 </div>
 
-<div class="container" *ngIf="modo==2">
+<div class="container" *ngIf="modo==2 || modo==3">
 
     <mat-icon (click)="ngOnInit()" class="mat-18" style="color: white; cursor: pointer">arrow_back</mat-icon>
 
@@ -59,7 +59,7 @@
     <form [formGroup]='formDirLocal'>
         <mat-form-field class="mt-4" style="width: 100%; color: white" appearance="outline" color="accent">
             <mat-label>Ciudad *</mat-label>
-            <mat-select formControlName="Ciudad" style="color:white">
+            <mat-select #comboCity formControlName="Ciudad" style="color:white">
                 <mat-option *ngFor="let ciudad of cities" [value]="ciudad.value">
                     {{ciudad.city}}
                 </mat-option>
@@ -70,7 +70,7 @@
             <div class="col-8">
                 <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
                     <mat-label>Calle *</mat-label>
-                    <input formControlName="Calle" matInput>
+                    <input #inputStreet formControlName="Calle" matInput>
                     <mat-error *ngIf="formDirLocal.controls.Calle.invalid && (formDirLocal.controls.Calle.dirty || formDirLocal.controls.Calle.touched)">
                         <mat-error *ngIf="formDirLocal.controls.Calle.errors.required">
                             Campo <strong>requerido</strong>
@@ -84,7 +84,7 @@
             <div class="col-4">
                 <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
                     <mat-label>Número *</mat-label>
-                    <input formControlName="Numero" matInput>
+                    <input #inputNumber formControlName="Numero" matInput>
                     <mat-error *ngIf="formDirLocal.controls.Numero.invalid && (formDirLocal.controls.Numero.dirty || formDirLocal.controls.Numero.touched)">
                         <mat-error *ngIf="formDirLocal.controls.Numero.errors.required">
                             Campo <strong>requerido</strong>
@@ -97,13 +97,13 @@
             </div>
         </div>
         <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
-            <mat-label>Descripcion</mat-label>
+            <mat-label>Referencia</mat-label>
             <input formControlName="Descripcion" matInput>
         </mat-form-field>
     </form>
     <div class="mt-4" style="color: white;">
-        <agm-map (mapClick)="addMarker($event)" [latitude]="-31.425459" [longitude]="-64.184819" [zoom]="15">
-            <agm-marker [latitude]="marker.lat" [longitude]="marker.long"></agm-marker>
+        <agm-map (mapClick)="addMarker($event)" [latitude]="mapLat" [longitude]="mapLong" [zoom]="15">
+            <agm-marker [latitude]="marker.lat" [longitude]="marker.long" [visible]="markerVisible"></agm-marker>
         </agm-map>
     </div>
     <div class="mx-3 mt-5 d-flex justify-content-end" style="color: white;">
