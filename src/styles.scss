@@ -10,6 +10,14 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+agm-map {
+    height: 300px;
+}
+
+.mat-select-value-text {
+    color: white;
+}
+
 .image-area {
     position: relative;
     height: 150px;
