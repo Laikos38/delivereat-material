@@ -51,13 +51,23 @@
                     <input formControlName="fechaEntrega" matInput [matDatepicker]="datepicker" style="outline: none;" [min]="date" [max]="dateMax" readonly>
                     <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #datepicker></mat-datepicker>
+                    <mat-error *ngIf="formLoQueSea.controls.fechaEntrega.invalid && (formLoQueSea.controls.fechaEntrega.dirty || formLoQueSea.controls.fechaEntrega.touched)">
+                        <mat-error *ngIf="formLoQueSea.controls.fechaEntrega.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="col-4" style="color: white;">
                 <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Hora</mat-label>
-                    <input matInput [ngxTimepicker]="defaultValue" style="outline: none;" readonly [min]="getTime()" [format]="24" [disabled]="loantesposible">
+                    <input formControlName="horaEntrega" matInput [ngxTimepicker]="defaultValue" style="outline: none;" readonly [min]="getTime()" [format]="24">
                     <ngx-material-timepicker #defaultValue [minutesGap]="30"></ngx-material-timepicker>
+                    <mat-error *ngIf="formLoQueSea.controls.horaEntrega.invalid && (formLoQueSea.controls.horaEntrega.dirty || formLoQueSea.controls.horaEntrega.touched)">
+                        <mat-error *ngIf="formLoQueSea.controls.horaEntrega.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>

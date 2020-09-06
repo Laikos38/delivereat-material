@@ -55,6 +55,7 @@ export class LoqueseaComponent implements OnInit {
     this.formLoQueSea = this.formBuilder.group({
       Descripcion: ['', [Validators.required, Validators.maxLength(200)]],
       fechaEntrega: [{value: '', disabled: true}, [Validators.required]],
+      horaEntrega: [{value: '', disabled: true}, [Validators.required]],
     });
     this.formDirLocal = this.formBuilder.group({
       Ciudad: [this.cities[0].value, [Validators.required]],
@@ -94,10 +95,12 @@ export class LoqueseaComponent implements OnInit {
   habilitarFechaEntrega() {
     if (this.loantesposible) {
       this.loantesposible = false;
-      this.formLoQueSea.controls['fechaEntrega'].enable();
+      this.formLoQueSea.controls.fechaEntrega.enable();
+      this.formLoQueSea.controls.horaEntrega.enable();
     } else {
       this.loantesposible = true;
-      this.formLoQueSea.controls['fechaEntrega'].disable();
+      this.formLoQueSea.controls.fechaEntrega.disable();
+      this.formLoQueSea.controls.horaEntrega.disable();
     }
   }
 
@@ -184,6 +187,7 @@ export class LoqueseaComponent implements OnInit {
     }
     return 0;
   }
+
   onSelectImage(event) {
     // Valido que sea tipo jpg.
     if (event.target.files[0].type !== 'image/jpeg') {
@@ -222,7 +226,7 @@ export class LoqueseaComponent implements OnInit {
   cambiarModo(modo: string) {
     switch (modo) {
       case 'select_origen': {
-        this.formLoQueSea.controls.Descripcion.markAsTouched();
+        this.formLoQueSea.markAllAsTouched();
         if (this.formLoQueSea.invalid) {
           return;
         }
