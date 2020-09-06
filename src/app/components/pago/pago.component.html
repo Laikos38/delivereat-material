@@ -1,6 +1,6 @@
 <div class="container">
   <mat-icon
-    routerLink="home/"
+    routerLink="/loquesea"
     class="mat-18"
     style="color: white; cursor: pointer"
     >arrow_back</mat-icon
@@ -47,6 +47,11 @@
             >
               Campo <strong>requerido</strong>
             </mat-error>
+            <mat-error
+                *ngIf="formEfectivo.controls.montoEfectivo.errors.pattern"
+              >
+                Campo <strong>numérico</strong>
+              </mat-error>
             <mat-error
               *ngIf="formEfectivo.controls.montoEfectivo.errors.maxlength"
             >

@@ -1,16 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { Modo } from "src/app/models/modo.model";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Marker } from "src/app/models/marker.model";
-import { LocalizerService } from "../../services/localizer.service";
-import { Address } from "../../models/address.model";
-import swal from "sweetalert";
-import { City } from "../../models/city.model";
+import { Component, OnInit } from '@angular/core';
+import { Modo } from 'src/app/models/modo.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Marker } from 'src/app/models/marker.model';
+import { LocalizerService } from '../../services/localizer.service';
+import { Address } from '../../models/address.model';
+import swal from 'sweetalert';
+import { City } from '../../models/city.model';
+import { Time } from '@angular/common';
 
 @Component({
-  selector: "app-loquesea",
-  templateUrl: "./loquesea.component.html",
-  styleUrls: ["./loquesea.component.scss"],
+  selector: 'app-loquesea',
+  templateUrl: './loquesea.component.html',
+  styleUrls: ['./loquesea.component.scss']
 })
 export class LoqueseaComponent implements OnInit {
   modo: Modo;
@@ -23,24 +24,28 @@ export class LoqueseaComponent implements OnInit {
   mapLong: number;
   markerVisible = true;
   ciudadOrigen: number;
+  noChange: boolean = false;
+  loantesposible: boolean = true;
+  date: Date = new Date();
+  dateMax: Date = new Date();
+  timeMin: string = '';
 
   cities: City[] = [
-    { city: "Ciudad de Córdoba", value: 1 },
-    { city: "Las Varillas", value: 2 },
-    { city: "Río Tercero", value: 3 },
-    { city: "Villa Carlos Paz", value: 4 },
-    { city: "Villa María", value: 5 },
-    { city: "San Francisco", value: 6 },
-    { city: "Río Cuarto", value: 7 },
-    { city: "Villa Allende", value: 8 },
-    { city: "Cosquín", value: 9 },
-    { city: "La Falda", value: 10 },
-  ];
+    {city: 'Ciudad de Córdoba', value: 1},
+    {city: 'Las Varillas', value: 2},
+    {city: 'Río Tercero', value: 3},
+    {city: 'Villa Carlos Paz', value: 4},
+    {city: 'Villa María', value: 5},
+    {city: 'San Francisco', value: 6},
+    {city: 'Río Cuarto', value: 7},
+    {city: 'Villa Allende', value: 8},
+    {city: 'Cosquín', value: 9},
+    {city: 'La Falda', value: 10}
+];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private localizer: LocalizerService
-  ) {}
+  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService) {
+    this.dateMax.setDate(this.date.getDate() + 30);
+   }
 
   ngOnInit() {
     this.mapLat = -31.4255279;
@@ -48,19 +53,52 @@ export class LoqueseaComponent implements OnInit {
     this.marker = new Marker();
     this.modo = Modo.PideLoQueSea;
     this.formLoQueSea = this.formBuilder.group({
-      Descripcion: ["", [Validators.required, Validators.maxLength(255)]],
+      Descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+      fechaEntrega: [{value: '', disabled: true}, [Validators.required]],
     });
     this.formDirLocal = this.formBuilder.group({
       Ciudad: [this.cities[0].value, [Validators.required]],
-      Calle: ["", [Validators.required, Validators.maxLength(255)]],
-      Numero: ["", [Validators.required, Validators.pattern("[0-9]{1,7}")]],
-      Descripcion: ["", [Validators.maxLength(255)]],
+      Calle: ['', [Validators.required, Validators.maxLength(255)]],
+      Numero: ['', [Validators.required, Validators.pattern('[0-9]{1,7}')]],
+      Descripcion: ['', [Validators.maxLength(255)]]
     });
-
     this.formDirLocal.valueChanges.subscribe( resp => {
+      if (!this.noChange) {
       this.getCoords();
+      }
     });
+  }
 
+  getTime() {
+    let dateString = this.formatDate(this.date);
+    let dateString2 = this.formatDate(this.formLoQueSea.controls.fechaEntrega.value);
+    if (dateString == dateString2) {
+      let ahora = new Date();
+      let hora = ahora.getHours().toString()+':'+ahora.getMinutes().toString();
+      return hora;
+    }
+  }
+
+  formatDate(date) {
+    let d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  habilitarFechaEntrega() {
+    if (this.loantesposible) {
+      this.loantesposible = false;
+      this.formLoQueSea.controls['fechaEntrega'].enable();
+    } else {
+      this.loantesposible = true;
+      this.formLoQueSea.controls['fechaEntrega'].disable();
+    }
   }
 
   getCoords() {
@@ -91,43 +129,53 @@ export class LoqueseaComponent implements OnInit {
       this.mapLong = this.marker.long;
 
     });
+
+
   }
 
   addMarker(event) {
-    const coords: { lat: number; lng: number } = event.coords;
+    const coords: { lat: number, lng: number } = event.coords;
     let address = new Address();
+
     this.localizer.getAddress(coords.lat, coords.lng).subscribe((resp: any) => {
+
       // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < resp.length; i++) {
-        if (resp[i].types[0] === "locality") {
+      for ( let i = 0; i < resp.length; i++) {
+        if (resp[i].types[0] === 'locality') {
           // tslint:disable-next-line: max-line-length
-          address = {
-            number: resp[0].address_components[0].long_name,
-            street: resp[0].address_components[1].long_name,
-            city: resp[i].address_components[0].long_name,
-          };
+          address = { number: resp[0].address_components[0].long_name, street: resp[0].address_components[1].long_name, city: resp[i].address_components[0].long_name};
           break;
         }
       }
       if ( this.validarCiudad(address) === 0) {
         return;
       }
+
       this.marker.lat = coords.lat;
       this.marker.long = coords.lng;
+      this.noChange = true;
       this.formDirLocal.controls.Ciudad.setValue(this.validarCiudad(address));
       this.formDirLocal.controls.Calle.setValue(address.street);
       this.formDirLocal.controls.Numero.setValue(address.number);
+      this.noChange = false;
+      this.markerVisible = true;
     });
+
   }
 
   validarCiudad(address: Address): number {
     if (this.modo === Modo.SeleccionarDestino) {
+
+      let cityName = '';
       for (const city of this.cities) {
-        if (address.city === city.city && city.value === this.ciudadOrigen) {
-          return city.value;
+        if (city.value === this.ciudadOrigen) {
+          cityName = city.city;
         }
-        return 0;
       }
+      if (cityName === address.city) {
+        return this.ciudadOrigen;
+      }
+      return 0;
     }
     for (const city of this.cities) {
       if (address.city === city.city) {
@@ -138,13 +186,13 @@ export class LoqueseaComponent implements OnInit {
   }
   onSelectImage(event) {
     // Valido que sea tipo jpg.
-    if (event.target.files[0].type !== "image/jpeg") {
-      this.dialogError("Unicamente se pueden subir imagenes JPG");
+    if (event.target.files[0].type !== 'image/jpeg') {
+      this.dialogError('Unicamente se pueden subir imagenes JPG');
       return;
     }
     // Valido que no pese más de 5 mbs.
     if (event.target.files[0].size > 5000000) {
-      this.dialogError("El archivo pesa más de 5 Mbs");
+      this.dialogError('El archivo pesa más de 5 Mbs');
       return;
     }
     if (event.target.files && event.target.files[0]) {
@@ -161,30 +209,29 @@ export class LoqueseaComponent implements OnInit {
 
   dialogError(error: string) {
     swal({
-      title: "Fracaso",
+      title: 'Fracaso',
       text: error,
-      icon: "error",
+      icon: 'error',
       closeOnClickOutside: true,
-      buttons: [false],
+      buttons: [false]
     });
-    setTimeout(() => {
-      swal.close();
-    }, 3000);
+    setTimeout( () => {
+      swal.close(); }, 3000 );
   }
 
   cambiarModo(modo: string) {
     switch (modo) {
-      case "select_origen": {
+      case 'select_origen': {
         this.formLoQueSea.controls.Descripcion.markAsTouched();
         if (this.formLoQueSea.invalid) {
           return;
         }
         this.modo = Modo.SeleccionarOrigen;
-        this.seleccionar = "origen";
+        this.seleccionar = 'origen';
 
         break;
       }
-      case "select_destino": {
+      case 'select_destino': {
         this.formDirLocal.controls.Calle.markAsTouched();
         this.formDirLocal.controls.Numero.markAsTouched();
         if (this.formDirLocal.invalid) {
@@ -202,6 +249,6 @@ export class LoqueseaComponent implements OnInit {
       default: {
         break;
       }
-    }
+   }
   }
 }

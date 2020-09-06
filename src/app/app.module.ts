@@ -12,6 +12,7 @@ import { TopbarComponent } from "./components/topbar/topbar.component";
 import { LoqueseaComponent } from "./components/loquesea/loquesea.component";
 import { MaterialModule } from "./material/material.module";
 import { PagoComponent } from "./components/pago/pago.component";
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PagoComponent } from "./components/pago/pago.component";
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyD4HRCOA8f1OaZpZtY78Bh20Kk0bopb8Zs",
     }),
+    NgxMaterialTimepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
