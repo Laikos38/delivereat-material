@@ -1,25 +1,27 @@
-<mat-toolbar class="bg-transparent">
-  <mat-toolbar-row style="color: white;">
-    <button style="outline: none;" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
-    <span>DeliverEat</span>
-  </mat-toolbar-row>
-</mat-toolbar>
-<mat-sidenav-container class="bg-transparent" style="height: 100vh;">
-  <mat-sidenav #drawer mode="over" role="navigation">
-    <mat-nav-list>
-      <mat-list-item routerLink='home/'>
-        <a (click)="drawer.toggle()">Home</a>
-        <mat-icon matListIcon>home</mat-icon>
-      </mat-list-item>
-      <mat-list-item routerLink='loquesea/'>
-        <a (click)="drawer.toggle()">Lo que sea</a>
-        <mat-icon matListIcon>directions_bike</mat-icon>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div style="background-image: linear-gradient(to right top, #141518, #2a3647, #375c7c, #3686b3, #12b3eb);">
+  <mat-toolbar class="bg-transparent">
+    <mat-toolbar-row style="color: white;">
+      <button style="outline: none;" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>DeliverEat</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-sidenav-container class="bg-transparent" style="height: 100vh;">
+    <mat-sidenav #drawer mode="over" role="navigation">
+      <mat-nav-list>
+        <mat-list-item routerLink='home/'>
+          <a (click)="drawer.toggle()">Home</a>
+          <mat-icon matListIcon>home</mat-icon>
+        </mat-list-item>
+        <mat-list-item routerLink='loquesea/'>
+          <a (click)="drawer.toggle()">Lo que sea</a>
+          <mat-icon matListIcon>directions_bike</mat-icon>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
