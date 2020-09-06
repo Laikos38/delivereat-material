@@ -1,4 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+agm-map {
+    height: 300px;
+}
+
+.mat-select-value-text {
+    color: white;
+}
+
+.image-area {
+    position: relative;
+    height: 150px;
+    width: 210px;
+}
+
+.remove-image {
+    display: none;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-radius: 10em;
+    padding: 2px 6px 3px;
+    text-decoration: none;
+    font: 700 21px/20px sans-serif;
+    background: #555;
+    border: 3px solid #fff;
+    color: #FFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
+}
+
+.remove-image:hover {
+    background: #ff4081;
+    padding: 3px 7px 5px;
+    top: -11px;
+    right: -11px;
+}
+
+.remove-image:active {
+    background: #ff4081;
+    top: -10px;
+    right: -11px;
+}

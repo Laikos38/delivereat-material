@@ -9,12 +9,12 @@
 <mat-sidenav-container class="bg-transparent" style="height: 100vh;">
   <mat-sidenav #drawer mode="over" role="navigation">
     <mat-nav-list>
-      <mat-list-item>
-        <a routerLink='home/' (click)="drawer.toggle()">Home</a>
+      <mat-list-item routerLink='home/'>
+        <a (click)="drawer.toggle()">Home</a>
         <mat-icon matListIcon>home</mat-icon>
       </mat-list-item>
-      <mat-list-item>
-        <a routerLink='loquesea/' (click)="drawer.toggle()">Lo que sea</a>
+      <mat-list-item routerLink='loquesea/'>
+        <a (click)="drawer.toggle()">Lo que sea</a>
         <mat-icon matListIcon>directions_bike</mat-icon>
       </mat-list-item>
     </mat-nav-list>
