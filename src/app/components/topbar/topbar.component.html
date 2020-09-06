@@ -10,13 +10,29 @@
   <mat-sidenav-container class="bg-transparent" style="height: 100vh;">
     <mat-sidenav #drawer mode="over" role="navigation">
       <mat-nav-list>
-        <mat-list-item routerLink='home/'>
-          <a (click)="drawer.toggle()">Home</a>
+        <mat-list-item routerLink='home/' (click)="drawer.toggle()">
+          <a>Home</a>
           <mat-icon matListIcon>home</mat-icon>
         </mat-list-item>
-        <mat-list-item routerLink='loquesea/'>
-          <a (click)="drawer.toggle()">Lo que sea</a>
+        <mat-list-item (click)="drawer.toggle()">
+          <a>Tu perfil</a>
+          <mat-icon matListIcon>person</mat-icon>
+        </mat-list-item>
+        <mat-list-item routerLink='loquesea/' (click)="drawer.toggle()">
+          <a>Lo que sea</a>
           <mat-icon matListIcon>directions_bike</mat-icon>
+        </mat-list-item>
+        <mat-list-item (click)="drawer.toggle()">
+          <a>Soporte</a>
+          <mat-icon matListIcon>support</mat-icon>
+        </mat-list-item>
+        <mat-list-item (click)="drawer.toggle()">
+          <a>Ayuda</a>
+          <mat-icon matListIcon>help</mat-icon>
+        </mat-list-item>
+        <mat-list-item (click)="drawer.toggle(); openDialog()">
+          <a>Acerda de</a>
+          <mat-icon matListIcon>info</mat-icon>
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>

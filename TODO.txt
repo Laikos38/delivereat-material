@@ -10,7 +10,3 @@ basicamente hacer todo pago desde cero.
 
 -------------
 
-arreglar fondo de la app abajo del todo
-
-validar que hora de entrega sea required
-
