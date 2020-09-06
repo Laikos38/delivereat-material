@@ -1,0 +1,16 @@
+agregar cero en fecha vencimiento tarjeta de credito --- agregar componente de tarjeta de credito.
+
+nombre de titular en tarjeta deberia ser 1 caracteres minimo (nombre) , un espacio y 1 caracteres minimo (apellido)
+
+validar que el numero de tarjeta de credito tenga como max 16 numeros
+
+desactivar sweetalert en pago. mostrarlo solo en confirmar pedido
+
+basicamente hacer todo pago desde cero.
+
+-------------
+
+arreglar fondo de la app abajo del todo
+
+validar que hora de entrega sea required
+
