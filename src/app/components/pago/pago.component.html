@@ -48,10 +48,10 @@
               Campo <strong>requerido</strong>
             </mat-error>
             <mat-error
-                *ngIf="formEfectivo.controls.montoEfectivo.errors.pattern"
-              >
-                Campo <strong>numérico</strong>
-              </mat-error>
+              *ngIf="formEfectivo.controls.montoEfectivo.errors.pattern"
+            >
+              Campo <strong>numérico</strong>
+            </mat-error>
             <mat-error
               *ngIf="formEfectivo.controls.montoEfectivo.errors.maxlength"
             >
@@ -105,8 +105,12 @@
           appearance="outline"
           color="accent"
         >
-          <mat-label>Nombre del titular</mat-label>
-          <input formControlName="nombreTitular" matInput />
+          <mat-label>Nombre y Apellido del titular</mat-label>
+          <input
+            formControlName="nombreTitular"
+            matInput
+            style="text-transform: uppercase"
+          />
           <mat-error
             *ngIf="
               formTarjeta.controls.nombreTitular.invalid &&
@@ -123,6 +127,11 @@
               *ngIf="formTarjeta.controls.nombreTitular.errors.maxlength"
             >
               Demasiados <strong>caracteres</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formTarjeta.controls.nombreTitular.errors.pattern"
+            >
+              Nombre <strong>inválido</strong>
             </mat-error>
           </mat-error>
         </mat-form-field>
@@ -202,7 +211,11 @@
     </form>
   </div>
 
-  <div class="mx-3 mt-5 d-flex justify-content-end" style="color: white">
+  <div
+    class="mx-3 mt-5 d-flex justify-content-end"
+    style="color: white"
+    *ngIf="modo == 4 || modo == 5"
+  >
     <button
       mat-raised-button
       color="accent"
