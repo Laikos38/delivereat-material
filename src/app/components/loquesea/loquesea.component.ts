@@ -301,7 +301,7 @@ export class LoqueseaComponent implements OnInit {
         }
 
         this.modo = Modo.SeleccionarOrigen;
-        this.seleccionar = "origen";
+        this.seleccionar = 'dirección del comercio';
 
         break;
       }
@@ -354,6 +354,7 @@ export class LoqueseaComponent implements OnInit {
           }
           aux = localStorage.getItem("pedidoCiudad");
           this.formDirLocal.controls.Ciudad.setValue(parseInt(aux));
+          this.ciudadOrigen = parseInt(aux);
         } else {
           this.ciudadOrigen = this.formDirLocal.controls.Ciudad.value;
           this.formDirLocal.reset();
@@ -361,7 +362,7 @@ export class LoqueseaComponent implements OnInit {
         }
 
         this.modo = Modo.SeleccionarDestino;
-        this.seleccionar = "destino";
+        this.seleccionar = 'dirección de entrega';
         this.formDirLocal.controls.Ciudad.disable();
         this.markerVisible = false;
         break;
