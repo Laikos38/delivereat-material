@@ -4,7 +4,10 @@
       <button style="outline: none;" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>DeliverEat</span>
+      
+      <span>
+        <img src="assets\img\scooter.png">
+        DeliverEat</span>
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-sidenav-container class="bg-transparent" style="height: 100vh;">
@@ -31,7 +34,7 @@
           <mat-icon matListIcon>help</mat-icon>
         </mat-list-item>
         <mat-list-item (click)="drawer.toggle(); openDialog()">
-          <a>Acerda de</a>
+          <a>Acerca de</a>
           <mat-icon matListIcon>info</mat-icon>
         </mat-list-item>
       </mat-nav-list>

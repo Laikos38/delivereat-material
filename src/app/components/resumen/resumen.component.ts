@@ -85,30 +85,25 @@ export class ResumenComponent implements OnInit {
 
   confirmar() {
     swal({
-      title: "Confirmar",
-      text: "Estas seguro de enviar tu pedido?",
-      icon: "info",
-      buttons: ["Cancelar", "Enviar"],
-    }).then((enviar) => {
-      if (enviar) {
-        setTimeout(() => {
-          swal.close();
-          this.router.navigate(["/home"]);
-        }, 2000);
-        swal("Recibimos tu pedido!", {
-          icon: "success",
-        });
-        localStorage.clear();
-      }
+      title: "Pedido Confirmado",
+      icon: "success",
+      text: "El cadete se está dirigiendo al comercio.",
+      closeOnClickOutside: true,
+      buttons: [false],
     });
+    setTimeout(() => {
+      swal.close();
+      localStorage.clear();
+      this.router.navigate(["/home"]);
+    }, 3000);
   }
 
   cancelar() {
     swal({
       title: "Confirmar",
-      text: "Estas seguro de cancelar tu pedido?",
+      text: "¿Estás seguro de cancelar tu pedido?",
       icon: "warning",
-      buttons: ["Volver", "Eliminar"],
+      buttons: ["No", "Sí"],
       dangerMode: true,
     }).then((cancelar) => {
       if (cancelar) {
