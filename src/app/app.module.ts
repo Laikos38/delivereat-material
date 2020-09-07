@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AgmCoreModule } from "@agm/core";
+import {NgxMaskModule} from 'ngx-mask'
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -32,6 +33,7 @@ import { ResumenComponent } from './components/resumen/resumen.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyD4HRCOA8f1OaZpZtY78Bh20Kk0bopb8Zs",
     }),

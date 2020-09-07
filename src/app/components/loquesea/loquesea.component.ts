@@ -9,6 +9,7 @@ import { City } from '../../models/city.model';
 import { Time } from '@angular/common';
 import { Pedido } from 'src/app/models/pedido.model';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-loquesea',
@@ -46,7 +47,7 @@ export class LoqueseaComponent implements OnInit {
     {city: 'La Falda', value: 10}
 ];
 
-  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService, private router: Router, private _snackBar: MatSnackBar) {
     this.dateMax.setDate(this.date.getDate() + 30);
   }
 
@@ -191,6 +192,7 @@ export class LoqueseaComponent implements OnInit {
       if (cityName === address.city) {
         return this.ciudadOrigen;
       }
+      this.openSnackBar('El envío debe ser dentro de ' + cityName);
       return 0;
     }
     for (const city of this.cities) {
@@ -198,7 +200,15 @@ export class LoqueseaComponent implements OnInit {
         return city.value;
       }
     }
+    this.openSnackBar('No tenemos cobertura en esta zona :(');
     return 0;
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', {
+      duration: 2000,
+      panelClass: ['error-snackbar']
+    });
   }
 
   onSelectImage(event) {
