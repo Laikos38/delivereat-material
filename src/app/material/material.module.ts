@@ -13,6 +13,7 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatCheckboxModule,
+  MatSnackBarModule
 } from "@angular/material";
 
 const myModules = [
@@ -28,11 +29,12 @@ const myModules = [
   MatRadioModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
   imports: [myModules],
   exports: [myModules],
 })
-export class MaterialModule {}
+export class MaterialModule { }

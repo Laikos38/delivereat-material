@@ -7,6 +7,8 @@ import { Address } from '../../models/address.model';
 import swal from 'sweetalert';
 import { City } from '../../models/city.model';
 import { Time } from '@angular/common';
+import { MatSnackBar } from '@angular/material';
+
 
 @Component({
   selector: 'app-loquesea',
@@ -43,7 +45,7 @@ export class LoqueseaComponent implements OnInit {
     {city: 'La Falda', value: 10}
 ];
 
-  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService) {
+  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService, private _snackBar: MatSnackBar) {
     this.dateMax.setDate(this.date.getDate() + 30);
    }
 
@@ -175,6 +177,7 @@ export class LoqueseaComponent implements OnInit {
       if (cityName === address.city) {
         return this.ciudadOrigen;
       }
+      this.openSnackBar('El envío debe ser dentro de ' + cityName);
       return 0;
     }
     for (const city of this.cities) {
@@ -182,8 +185,17 @@ export class LoqueseaComponent implements OnInit {
         return city.value;
       }
     }
+    this.openSnackBar('No tenemos cobertura en esta zona :(');
     return 0;
   }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', {
+      duration: 2000,
+      panelClass: ['error-snackbar']
+    });
+  }
+
   onSelectImage(event) {
     // Valido que sea tipo jpg.
     if (event.target.files[0].type !== 'image/jpeg') {

@@ -1,229 +1,152 @@
 <div class="container">
-  <mat-icon
-    routerLink="/loquesea"
-    class="mat-18"
-    style="color: white; cursor: pointer"
-    >arrow_back</mat-icon
-  >
+    <mat-icon routerLink="/loquesea" class="mat-18" style="color: white; cursor: pointer">arrow_back</mat-icon>
 
-  <div
-    style="border-bottom: 1px solid white; color: white"
-    class="text-left mt-2"
-  >
-    <h6>Opciones de pago</h6>
-  </div>
-  <form [formGroup]="formOpciones">
-    <div class="mx-3 mt-4 justify-content-center" style="color: white">
-      <mat-radio-group
-        formControlName="opcionesPago"
-        aria-label="Seleccione un método de pago"
-        (change)="radioChange($event)"
-      >
-        <mat-radio-button value="1">Efectivo</mat-radio-button>
-        <mat-radio-button value="2" class="ml-4">Tarjeta VISA</mat-radio-button>
-      </mat-radio-group>
+    <div style="border-bottom: 1px solid white; color: white" class="text-left mt-2">
+        <h6>Opciones de pago</h6>
     </div>
-  </form>
+    <form [formGroup]="formOpciones">
+        <div class="mx-3 mt-4 justify-content-center" style="color: white">
+            <mat-radio-group formControlName="opcionesPago" aria-label="Seleccione un método de pago" (change)="radioChange($event)">
+                <mat-radio-button value="1">Efectivo</mat-radio-button>
+                <mat-radio-button value="2" class="ml-4">Tarjeta VISA</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </form>
 
-  <div *ngIf="modo == 4">
-    <form [formGroup]="formEfectivo">
-      <div class="mt-2 mx-4">
-        <mat-form-field
-          style="width: 100%; color: white; margin-bottom: 0cm"
-          appearance="outline"
-          color="accent"
-        >
-          <mat-label>¿Con cuánto vas a pagar?</mat-label>
-          <input formControlName="montoEfectivo" matInput />
-          <mat-error
-            *ngIf="
+    <div *ngIf="modo == 4">
+        <form [formGroup]="formEfectivo">
+            <div class="mt-2 mx-4">
+                <mat-form-field style="width: 100%; color: white; margin-bottom: 0cm" appearance="outline" color="accent">
+                    <mat-label>¿Con cuánto vas a pagar?</mat-label>
+                    <input formControlName="montoEfectivo" matInput prefix="$ " mask="9999999999" />
+                    <mat-error *ngIf="
               formEfectivo.controls.montoEfectivo.invalid &&
               (formEfectivo.controls.montoEfectivo.dirty ||
                 formEfectivo.controls.montoEfectivo.touched)
-            "
-          >
-            <mat-error
-              *ngIf="formEfectivo.controls.montoEfectivo.errors.required"
-            >
-              Campo <strong>requerido</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="formEfectivo.controls.montoEfectivo.errors.pattern"
-            >
-              Campo <strong>numérico</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="formEfectivo.controls.montoEfectivo.errors.maxlength"
-            >
-              Demasiados <strong>caracteres</strong>
-            </mat-error>
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </form>
-  </div>
+            ">
+                        <mat-error *ngIf="formEfectivo.controls.montoEfectivo.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formEfectivo.controls.montoEfectivo.errors.pattern">
+                            Número <strong>incorrecto</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formEfectivo.controls.montoEfectivo.errors.maxlength">
+                            Demasiados <strong>caracteres</strong>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
 
-  <div *ngIf="modo == 5">
-    <form [formGroup]="formTarjeta">
-      <div class="mt-2 mx-4">
-        <mat-form-field
-          style="width: 100%; color: white"
-          appearance="outline"
-          color="accent"
-        >
-          <mat-label>Número de la tarjeta</mat-label>
-          <input formControlName="numeroTarjeta" matInput />
-          <mat-error
-            *ngIf="
+    <div *ngIf="modo == 5">
+        <form [formGroup]="formTarjeta">
+            <!-- Empieza Tarjeta -->
+            <div class='card mt-2 mb-4'>
+                <div class='card-content'>
+                    <svg id='logo-visa' enable-background="new 0 0 50 70" height="70px" version="1.1" viewBox="0 0 50 50" width="70px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g><polygon clip-rule="evenodd" fill="#f4f5f9" fill-rule="evenodd" points="17.197,32.598 19.711,17.592 23.733,17.592     21.214,32.598   "/><path clip-rule="evenodd" d="M35.768,17.967c-0.797-0.287-2.053-0.621-3.596-0.621    c-3.977,0-6.752,2.029-6.776,4.945c-0.023,2.154,1.987,3.358,3.507,4.08c1.568,0.738,2.096,1.201,2.076,1.861    c0,1.018-1.238,1.471-2.395,1.471c-1.604,0-2.455-0.232-3.773-0.787l-0.53-0.248l-0.547,3.348    c0.929,0.441,2.659,0.789,4.462,0.811c4.217,0,6.943-2.012,6.979-5.135c0.025-1.692-1.053-2.999-3.369-4.071    c-1.393-0.685-2.246-1.134-2.246-1.844c0-0.645,0.723-1.306,2.295-1.306c1.314-0.024,2.268,0.271,3.002,0.58l0.365,0.167    L35.768,17.967z" fill="#f4f5f9" fill-rule="evenodd"/><path clip-rule="evenodd" d="M46.055,17.616h-3.102c-0.955,0-1.688,0.272-2.117,1.24    l-5.941,13.767h4.201c0,0,0.688-1.869,0.852-2.262c0.469,0,4.547,0,5.133,0c0.123,0.518,0.49,2.262,0.49,2.262h3.711    L46.055,17.616 M41.1,27.277c0.328-0.842,1.609-4.175,1.609-4.175c-0.041,0.043,0.328-0.871,0.529-1.43l0.256,1.281    c0,0,0.773,3.582,0.938,4.324H41.1z" fill="#f4f5f9" fill-rule="evenodd"/><path clip-rule="evenodd" d="M13.843,17.616L9.905,27.842l-0.404-2.076    c-0.948-2.467-2.836-4.634-5.53-6.163l3.564,12.995h4.243l6.312-14.982H13.843z" fill="#f4f5f9" fill-rule="evenodd"/><path clip-rule="evenodd" d="M7.232,17.174H0.755l-0.037,0.333    c5.014,1.242,8.358,4.237,9.742,7.841l-1.42-6.884C8.798,17.507,8.105,17.223,7.232,17.174L7.232,17.174z" fill="#f4f5f9" fill-rule="evenodd"/></g></g></svg>
+                    <h5>Card Number</h5>
+                    <h6 id='label-cardnumber'> &zwnj;{{formTarjeta.controls.numeroTarjeta.value}}</h6>
+                    <h5>Expiration<span style="margin-left: 55px;">CVC</span></h5>
+                    <h6 id='label-cardexpiration'>{{formTarjeta.controls.fechaVencimiento.value}}<span>{{formTarjeta.controls.codigoSeguridad.value}}</span></h6>
+                </div>
+                <div class='wave'></div>
+            </div>
+            <div class="mt-2 mx-4">
+                <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+                    <mat-label>Número de la tarjeta</mat-label>
+                    <input formControlName="numeroTarjeta" matInput mask="0000-0000-0000-0000" [dropSpecialCharacters]="false" />
+                    <mat-error *ngIf="
               formTarjeta.controls.numeroTarjeta.invalid &&
               (formTarjeta.controls.numeroTarjeta.dirty ||
                 formTarjeta.controls.numeroTarjeta.touched)
-            "
-          >
-            <mat-error
-              *ngIf="formTarjeta.controls.numeroTarjeta.errors.required"
-            >
-              Campo <strong>requerido</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="formTarjeta.controls.numeroTarjeta.errors.maxlength"
-            >
-              Demasiados <strong>caracteres</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="formTarjeta.controls.numeroTarjeta.errors.pattern"
-            >
-              Número de tarjeta <strong>no válido </strong>
-            </mat-error>
-          </mat-error>
-        </mat-form-field>
-      </div>
+            ">
+                        <mat-error *ngIf="formTarjeta.controls.numeroTarjeta.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formTarjeta.controls.numeroTarjeta.errors.pattern">
+                            Número de tarjeta <strong>no válido </strong>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="mt-1 mx-4">
-        <mat-form-field
-          style="width: 100%; color: white"
-          appearance="outline"
-          color="accent"
-        >
-          <mat-label>Nombre y Apellido del titular</mat-label>
-          <input
-            formControlName="nombreTitular"
-            matInput
-            style="text-transform: uppercase"
-          />
-          <mat-error
-            *ngIf="
+            <div class="mt-1 mx-4">
+                <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+                    <mat-label>Nombre y Apellido del titular</mat-label>
+                    <input formControlName="nombreTitular" matInput style="text-transform: uppercase" />
+                    <mat-error *ngIf="
               formTarjeta.controls.nombreTitular.invalid &&
               (formTarjeta.controls.nombreTitular.dirty ||
                 formTarjeta.controls.nombreTitular.touched)
-            "
-          >
-            <mat-error
-              *ngIf="formTarjeta.controls.nombreTitular.errors.required"
-            >
-              Campo <strong>requerido</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="formTarjeta.controls.nombreTitular.errors.maxlength"
-            >
-              Demasiados <strong>caracteres</strong>
-            </mat-error>
-            <mat-error
-              *ngIf="formTarjeta.controls.nombreTitular.errors.pattern"
-            >
-              Nombre <strong>inválido</strong>
-            </mat-error>
-          </mat-error>
-        </mat-form-field>
-      </div>
+            ">
+                        <mat-error *ngIf="formTarjeta.controls.nombreTitular.errors.required">
+                            Campo <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formTarjeta.controls.nombreTitular.errors.maxlength">
+                            Demasiados <strong>caracteres</strong>
+                        </mat-error>
+                        <mat-error *ngIf="formTarjeta.controls.nombreTitular.errors.pattern">
+                            Nombre <strong>inválido</strong>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="mt-1 mx-2 row">
-        <div class="col-7">
-          <mat-form-field
-            style="width: 100%; color: white"
-            appearance="outline"
-            color="accent"
-          >
-            <mat-label>Fecha de vencim.</mat-label>
-            <input formControlName="fechaVencimiento" matInput />
-            <mat-error
-              *ngIf="
+            <div class="mt-1 mx-2 row">
+                <div class="col-7">
+                    <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+                        <mat-label>Fecha de vencim.</mat-label>
+                        <input formControlName="fechaVencimiento" matInput mask="00/0000" [dropSpecialCharacters]="false" />
+                        <mat-error *ngIf="
                 formTarjeta.controls.fechaVencimiento.invalid &&
                 (formTarjeta.controls.fechaVencimiento.dirty ||
                   formTarjeta.controls.fechaVencimiento.touched)
-              "
-            >
-              <mat-error
-                *ngIf="formTarjeta.controls.fechaVencimiento.errors.required"
-              >
-                Campo <strong>requerido</strong>
-              </mat-error>
-              <mat-error
-                *ngIf="formTarjeta.controls.fechaVencimiento.errors.maxlength"
-              >
-                Demasiados <strong>caracteres</strong>
-              </mat-error>
+              ">
+                            <mat-error *ngIf="formTarjeta.controls.fechaVencimiento.errors.required">
+                                Campo <strong>requerido</strong>
+                            </mat-error>
+                            <mat-error *ngIf="formTarjeta.controls.fechaVencimiento.errors?.dateValidator">
+                                Fecha <strong>Invalida</strong>
+                            </mat-error>
 
-              <mat-error
-                *ngIf="formTarjeta.controls.fechaVencimiento.errors.pattern"
-              >
-                Fecha <strong>inválida</strong>
-              </mat-error>
-            </mat-error>
-          </mat-form-field>
-        </div>
+                            <mat-error *ngIf="formTarjeta.controls.fechaVencimiento.errors.pattern">
+                                Fecha <strong>inválida</strong>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
-        <div class="col-5">
-          <mat-form-field
-            style="width: 100%; color: white"
-            appearance="outline"
-            color="accent"
-          >
-            <mat-label>CVC</mat-label>
-            <input formControlName="codigoSeguridad" matInput />
-            <mat-error
-              *ngIf="
+                <div class="col-5">
+                    <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
+                        <mat-label>CVC</mat-label>
+                        <input formControlName="codigoSeguridad" matInput mask="000" />
+                        <mat-error *ngIf="
                 formTarjeta.controls.codigoSeguridad.invalid &&
                 (formTarjeta.controls.codigoSeguridad.dirty ||
                   formTarjeta.controls.codigoSeguridad.touched)
-              "
-            >
-              <mat-error
-                *ngIf="formTarjeta.controls.codigoSeguridad.errors.required"
-              >
-                Campo <strong>requerido</strong>
-              </mat-error>
-              <mat-error
-                *ngIf="formTarjeta.controls.codigoSeguridad.errors.maxlength"
-              >
-                Demasiados <strong>caracteres</strong>
-              </mat-error>
+              ">
+                            <mat-error *ngIf="formTarjeta.controls.codigoSeguridad.errors.required">
+                                Campo <strong>requerido</strong>
+                            </mat-error>
+                            <mat-error *ngIf="formTarjeta.controls.codigoSeguridad.errors.maxlength">
+                                Demasiados <strong>caracteres</strong>
+                            </mat-error>
 
-              <mat-error
-                *ngIf="formTarjeta.controls.codigoSeguridad.errors.pattern"
-              >
-                Código <strong>inválido</strong>
-              </mat-error>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-    </form>
-  </div>
+                            <mat-error *ngIf="formTarjeta.controls.codigoSeguridad.errors.pattern">
+                                Código <strong>inválido</strong>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
 
-  <div
-    class="mx-3 mt-5 d-flex justify-content-end"
-    style="color: white"
-    *ngIf="modo == 4 || modo == 5"
-  >
-    <button
-      mat-raised-button
-      color="accent"
-      style="outline: none"
-      (click)="validarForm()"
-    >
+    <div class="mx-3 mt-5 d-flex justify-content-end" style="color: white" *ngIf="modo == 4 || modo == 5">
+        <button mat-raised-button color="accent" style="outline: none" (click)="validarForm()">
       Continuar
       <mat-icon>forward</mat-icon>
     </button>
-  </div>
+    </div>
 </div>

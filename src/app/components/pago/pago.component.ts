@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import swal from "sweetalert";
 import { Modo } from "src/app/models/modo.model";
 import { MatRadioChange } from "@angular/material";
+import { dateValidator } from '../../validators/date.validator';
+
 
 @Component({
   selector: "app-pago",
@@ -27,7 +29,7 @@ export class PagoComponent implements OnInit {
         [
           Validators.required,
           Validators.maxLength(255),
-          Validators.pattern("[0-9]*$"),
+          Validators.pattern("^[1-9][0-9]*$"),
         ],
       ],
     });
@@ -36,8 +38,8 @@ export class PagoComponent implements OnInit {
         "",
         [
           Validators.required,
-          Validators.maxLength(16),
-          Validators.pattern("^4[0-9]{15}$"),
+          Validators.pattern('4[0-9]{3}[ -]*[0-9]{4}[ -]*[0-9]{4}[ -]*[0-9](?:[0-9]{3})'),
+          //Validators.pattern("^4[0-9]{15}$"),
         ],
       ],
       nombreTitular: [
@@ -45,12 +47,13 @@ export class PagoComponent implements OnInit {
         [
           Validators.required,
           Validators.maxLength(255),
-          Validators.pattern("(([A-Z]|[a-z])+)\\s(([A-Z]|[a-z])+)"),
+          Validators.pattern("([A-Za-z]{3,})\\s([A-Za-z]{3,})(\\s([A-Za-z]{3,})){0,2}"),
+          //Validators.pattern("(([A-Z]|[a-z])+)\\s(([A-Z]|[a-z])+)(\\s(([A-Z]|[a-z]))*)(\\s(([A-Z]|[a-z]))*)"),
         ],
       ],
       fechaVencimiento: [
         "",
-        [Validators.required, Validators.pattern("(1[0-2]|0[1-9])/[0-9]{4}")],
+        [Validators.required, Validators.pattern("(1[0-2]|0[1-9])/[0-9]{4}"), dateValidator],
       ],
       codigoSeguridad: [
         "",
