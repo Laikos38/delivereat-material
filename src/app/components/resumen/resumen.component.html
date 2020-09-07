@@ -1,1 +1,104 @@
-<p>resumen works!</p>
+<div class="container">
+  <mat-icon
+    routerLink="/pago"
+    class="mat-18"
+    style="color: white; cursor: pointer"
+    >arrow_back</mat-icon
+  >
+  <div class="mt-3" style="border-bottom: 1px solid white; color: white">
+    <h5>Resumen de tu pedido</h5>
+  </div>
+
+  <!-- Descripción -->
+  <div class="mt-4 mx-2" style="border-bottom: 1px solid black; color: white">
+    <h6>Descripción</h6>
+    <p class="mt-2 mx-2" style="font-size: 13px">{{ descripcion }}</p>
+  </div>
+
+  <!-- Detalle entrega -->
+  <div class="mt-4 mx-2" style="border-bottom: 1px solid black; color: white">
+    <h6>Detalles de entrega</h6>
+    <div class="row mx-2" style="font-size: 13px">
+      <div class="col-6 my-2 p-0">Ciudad:</div>
+      <div class="col-6 my-2">{{ ciudad }}</div>
+    </div>
+    <div class="row mx-2" style="font-size: 13px">
+      <div class="col-6 my-2 p-0">Dirección Comercio:</div>
+      <div class="col-6 my-2">{{ calleOrigen }} {{ alturaOrigen }}</div>
+    </div>
+    <div class="row mx-2" style="font-size: 13px">
+      <div class="col-6 my-2 p-0">Dirección Entrega:</div>
+      <div class="col-6 my-2">{{ calleDestino }} {{ alturaDestino }}</div>
+    </div>
+    <div
+      class="row mx-2"
+      style="font-size: 13px"
+      *ngIf="loAntesPosible == 'true'"
+    >
+      <div class="col-6 my-2 p-0">Tiempo de entrega:</div>
+      <div class="col-6 my-2">Lo antes posible</div>
+    </div>
+
+    <div *ngIf="loAntesPosible == 'false'">
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Fecha de entrega:</div>
+        <div class="col-6 my-2">{{ fechaEntrega }}</div>
+      </div>
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Hora de entrega:</div>
+        <div class="col-6 my-2">{{ horaEntrega }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detalle pago -->
+  <div class="mt-4 mx-2" style="border-bottom: 1px solid black; color: white">
+    <h6>Detalles del pago</h6>
+    <div *ngIf="formaPago == 'Efectivo'">
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Forma de pago:</div>
+        <div class="col-6 my-2">{{ formaPago }}</div>
+      </div>
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Costo de envío:</div>
+        <div class="col-6 my-2">$ 70</div>
+      </div>
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Abonás con:</div>
+        <div class="col-6 my-2">$ {{ pagasCon }}</div>
+      </div>
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Tu vuelto:</div>
+        <div class="col-6 my-2">$ {{ vuelto }}</div>
+      </div>
+    </div>
+    <div *ngIf="formaPago == 'Tarjeta'">
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Costo de envío:</div>
+        <div class="col-6 my-2">$ 70</div>
+      </div>
+      <div class="row mx-2" style="font-size: 13px">
+        <div class="col-6 my-2 p-0">Forma de pago:</div>
+        <div class="col-6 my-2">
+          Visa terminada en {{ ultimos4DigitosTarjeta }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="row mt-4 justify-content-center">
+    <div class="col-4 mx-3 p-0">
+      <button mat-raised-button color="warn" (click)="cancelar()">
+        Cancelar
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="col-4 mx-3 p-0">
+      <button mat-raised-button color="primary" (click)="confirmar()">
+        Confirmar
+        <mat-icon>check</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

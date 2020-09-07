@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+cambiar titulos de pantalla de seleccion de origen y destino por algo mas tipo "tu direcion" "direccion del comercio"
+
+bug al mostrar snackbar de que tienen que ser la misma direccion. (falla cuando volves atras)
+
+Agregar botón cancelar en el resto de pantallas
+=======
 agregar boton cancelar, que salte un modal pidiendo confirmacion. si SÍ, borrar localstorage e ir al home.
 
 al confirmar pedido borrar localstorage.
+>>>>>>> master

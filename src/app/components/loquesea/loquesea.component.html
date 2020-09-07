@@ -75,10 +75,14 @@
   </form>
 
   <div class="mx-3 mt-5 d-flex justify-content-end mb-5" style="color: white;">
-      <button mat-raised-button color="accent" style="outline: none;" (click)="cambiarModo('select_origen')">
-          Continuar
-          <mat-icon>forward</mat-icon>
-      </button>
+        <button mat-raised-button color="warn" (click)="cancelar()">
+            Cancelar
+            <mat-icon>close</mat-icon>
+        </button>
+        <button class="ml-3" mat-raised-button color="accent" style="outline: none;" (click)="cambiarModo('select_origen')">
+            Continuar
+            <mat-icon>forward</mat-icon>
+        </button>
   </div>
 </div>
 
@@ -142,13 +146,17 @@
       </agm-map>
   </div>
   <div class="mx-3 mt-5 d-flex justify-content-end mb-5" style="color: white;">
-      <button mat-raised-button *ngIf="modo==2" color="accent" style="outline: none;" (click)="cambiarModo('select_destino')">
-          Continuar
-          <mat-icon>forward</mat-icon>
-      </button>
-      <button mat-raised-button *ngIf="modo==3" color="accent" style="outline: none;" (click)="irAPago()">
-        Continuar
-        <mat-icon>forward</mat-icon>
+        <button mat-raised-button color="warn" (click)="cancelar()">
+            Cancelar
+            <mat-icon>close</mat-icon>
+        </button>
+        <button mat-raised-button class="ml-3" *ngIf="modo==2" color="accent" style="outline: none;" (click)="cambiarModo('select_destino')">
+            Continuar
+            <mat-icon>forward</mat-icon>
+        </button>
+        <button mat-raised-button class="ml-3" *ngIf="modo==3" color="accent" style="outline: none;" (click)="irAPago()">
+            Continuar
+            <mat-icon>forward</mat-icon>
     </button>
   </div>
 </div>
