@@ -4,6 +4,7 @@ import swal from "sweetalert";
 import { Modo } from "src/app/models/modo.model";
 import { MatRadioChange } from "@angular/material";
 import { dateValidator } from '../../validators/date.validator';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class PagoComponent implements OnInit {
   formEfectivo: FormGroup;
   formTarjeta: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {
     this.formOpciones = this.formBuilder.group({
@@ -76,6 +77,7 @@ export class PagoComponent implements OnInit {
       this.formTarjeta.markAllAsTouched();
       if (this.formTarjeta.invalid) return;
     }
-    window.alert("Pasando a confirmación..");
+
+    this.router.navigate(['/resumen']);
   }
 }
