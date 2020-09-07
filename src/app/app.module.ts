@@ -13,6 +13,7 @@ import { LoqueseaComponent } from "./components/loquesea/loquesea.component";
 import { MaterialModule } from "./material/material.module";
 import { PagoComponent } from "./components/pago/pago.component";
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ResumenComponent } from './components/resumen/resumen.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     TopbarComponent,
     LoqueseaComponent,
     PagoComponent,
+    ResumenComponent,
   ],
   imports: [
     BrowserModule,

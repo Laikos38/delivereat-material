@@ -1,12 +1,5 @@
-agregar cero en fecha vencimiento tarjeta de credito --- agregar componente de tarjeta de credito.
+cambiar titulos de pantalla de seleccion de origen y destino por algo mas tipo "tu direcion" "direccion del comercio"
 
-nombre de titular en tarjeta deberia ser 1 caracteres minimo (nombre) , un espacio y 1 caracteres minimo (apellido)
+agregar boton cancelar, que salte un modal pidiendo confirmacion. si SÍ, borrar localstorage e ir al home.
 
-validar que el numero de tarjeta de credito tenga como max 16 numeros
-
-desactivar sweetalert en pago. mostrarlo solo en confirmar pedido
-
-basicamente hacer todo pago desde cero.
-
--------------
-
+al confirmar pedido borrar localstorage.

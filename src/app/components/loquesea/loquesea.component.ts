@@ -7,6 +7,8 @@ import { Address } from '../../models/address.model';
 import swal from 'sweetalert';
 import { City } from '../../models/city.model';
 import { Time } from '@angular/common';
+import { Pedido } from 'src/app/models/pedido.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loquesea',
@@ -29,6 +31,7 @@ export class LoqueseaComponent implements OnInit {
   date: Date = new Date();
   dateMax: Date = new Date();
   timeMin: string = '';
+  pedido: Pedido = new Pedido();
 
   cities: City[] = [
     {city: 'Ciudad de Córdoba', value: 1},
@@ -43,9 +46,9 @@ export class LoqueseaComponent implements OnInit {
     {city: 'La Falda', value: 10}
 ];
 
-  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService) {
+  constructor(private formBuilder: FormBuilder, private localizer: LocalizerService, private router: Router) {
     this.dateMax.setDate(this.date.getDate() + 30);
-   }
+  }
 
   ngOnInit() {
     this.mapLat = -31.4255279;
@@ -53,7 +56,7 @@ export class LoqueseaComponent implements OnInit {
     this.marker = new Marker();
     this.modo = Modo.PideLoQueSea;
     this.formLoQueSea = this.formBuilder.group({
-      Descripcion: ['', [Validators.required, Validators.maxLength(200)]],
+      Descripcion: ['', [Validators.required, Validators.maxLength(255)]],
       fechaEntrega: [{value: '', disabled: true}, [Validators.required]],
       horaEntrega: [{value: '', disabled: true}, [Validators.required]],
     });
@@ -68,6 +71,16 @@ export class LoqueseaComponent implements OnInit {
       this.getCoords();
       }
     });
+
+    // Cargar de localstorage
+    let aux = localStorage.getItem('pedidoDescripcion');
+    if (aux) {
+      this.formLoQueSea.controls.Descripcion.setValue(aux);
+      aux = localStorage.getItem('image');
+      if (aux) {
+        this.imageUrl = aux;
+      }
+    }
   }
 
   getTime() {
@@ -207,6 +220,7 @@ export class LoqueseaComponent implements OnInit {
       // tslint:disable-next-line: no-shadowed-variable
       reader.onload = (event) => {
         this.imageUrl = reader.result;
+        localStorage.setItem('image', this.imageUrl);
       };
     }
   }
@@ -230,6 +244,29 @@ export class LoqueseaComponent implements OnInit {
         if (this.formLoQueSea.invalid) {
           return;
         }
+
+        // Cargar del localstorage
+        let aux = localStorage.getItem('pedidoCiudad');
+        if (aux) {
+          this.formDirLocal.controls.Ciudad.setValue(parseInt(aux));
+          aux = localStorage.getItem('pedidoCalleOrigen');
+          this.formDirLocal.controls.Calle.setValue(aux);
+          aux = localStorage.getItem('pedidoAlturaOrigen');
+          this.formDirLocal.controls.Numero.setValue(aux);
+          aux = localStorage.getItem('pedidoReferenciaOrigen');
+          if (aux) { this.formDirLocal.controls.Descripcion.setValue(aux); }
+        }
+
+        // Guardar en localstorage
+        localStorage.setItem('pedidoDescripcion', this.formLoQueSea.controls.Descripcion.value);
+        if (this.loantesposible) {
+          localStorage.setItem('loAntesPosible', 'true');
+        } else {
+          localStorage.setItem('loAntesPosible', 'false');
+          localStorage.setItem('pedidoFechaEntrega', this.formatDate(this.formLoQueSea.controls.fechaEntrega.value));
+          localStorage.setItem('pedidoHoraEntrega', this.formLoQueSea.controls.horaEntrega.value);
+        }
+
         this.modo = Modo.SeleccionarOrigen;
         this.seleccionar = 'origen';
 
@@ -241,11 +278,36 @@ export class LoqueseaComponent implements OnInit {
         if (this.formDirLocal.invalid) {
           return;
         }
-        this.ciudadOrigen = this.formDirLocal.controls.Ciudad.value;
+
+        // Guardar en localstorage
+        localStorage.setItem('pedidoCiudad', this.formDirLocal.controls.Ciudad.value);
+        localStorage.setItem('pedidoCalleOrigen', this.formDirLocal.controls.Calle.value);
+        localStorage.setItem('pedidoAlturaOrigen', this.formDirLocal.controls.Numero.value);
+        if (this.formDirLocal.controls.Descripcion.value) {
+          localStorage.setItem('pedidoReferenciaOrigen', this.formDirLocal.controls.Descripcion.value);
+        } else {
+          localStorage.setItem('pedidoReferenciaOrigen', '');
+        }
+
+
+        // Cargar del localstorage
+        let aux = localStorage.getItem('pedidoCalleDestino');
+        if (aux) {
+          this.formDirLocal.controls.Calle.setValue(aux);
+          aux = localStorage.getItem('pedidoAlturaDestino');
+          this.formDirLocal.controls.Numero.setValue(aux);
+          aux = localStorage.getItem('pedidoReferenciaDestino');
+          if (aux) { this.formDirLocal.controls.Descripcion.setValue(aux); } else { this.formDirLocal.controls.Descripcion.setValue(''); }
+          aux = localStorage.getItem('pedidoCiudad');
+          this.formDirLocal.controls.Ciudad.setValue(parseInt(aux));
+        } else {
+          this.ciudadOrigen = this.formDirLocal.controls.Ciudad.value;
+          this.formDirLocal.reset();
+          this.formDirLocal.controls.Ciudad.setValue(this.ciudadOrigen);
+        }
+
         this.modo = Modo.SeleccionarDestino;
         this.seleccionar = 'destino';
-        this.formDirLocal.reset();
-        this.formDirLocal.controls.Ciudad.setValue(this.ciudadOrigen);
         this.formDirLocal.controls.Ciudad.disable();
         this.markerVisible = false;
         break;
@@ -253,6 +315,19 @@ export class LoqueseaComponent implements OnInit {
       default: {
         break;
       }
-   }
+    }
+  }
+
+  irAPago() {
+    // Guardar en localstorage
+    localStorage.setItem('pedidoCalleDestino', this.formDirLocal.controls.Calle.value);
+    localStorage.setItem('pedidoAlturaDestino', this.formDirLocal.controls.Numero.value);
+    if (this.formDirLocal.controls.Descripcion.value) {
+      localStorage.setItem('pedidoReferenciaDestino', this.formDirLocal.controls.Descripcion.value);
+    } else {
+      localStorage.setItem('pedidoReferenciaDestino', '');
+    }
+
+    this.router.navigate(['/pago']);
   }
 }

@@ -43,7 +43,7 @@
       </div>
       
       <div class="mx-3 mt-4" style="color: white;">
-        <mat-checkbox checked="true" (click)="habilitarFechaEntrega()">Lo antes posible</mat-checkbox>
+        <mat-checkbox checked="loantesposible" (click)="habilitarFechaEntrega()">Lo antes posible</mat-checkbox>
         <div class="row d-flex align-items-center">
             <div class="col-8">
                 <mat-form-field class="w-100" appearance="outline">
@@ -146,7 +146,7 @@
           Continuar
           <mat-icon>forward</mat-icon>
       </button>
-      <button mat-raised-button *ngIf="modo==3" color="accent" style="outline: none;" [routerLink]="['/pago']">
+      <button mat-raised-button *ngIf="modo==3" color="accent" style="outline: none;" (click)="irAPago()">
         Continuar
         <mat-icon>forward</mat-icon>
     </button>
