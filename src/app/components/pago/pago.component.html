@@ -55,7 +55,7 @@
             <div class="mt-2 mx-4">
                 <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
                     <mat-label>Número de la tarjeta</mat-label>
-                    <input formControlName="numeroTarjeta" matInput mask="0000-0000-0000-0000" [dropSpecialCharacters]="false" />
+                    <input formControlName="numeroTarjeta" matInput placeholder="0000-0000-0000-0000" mask="0000-0000-0000-0000" [dropSpecialCharacters]="false" />
                     <mat-error *ngIf="
               formTarjeta.controls.numeroTarjeta.invalid &&
               (formTarjeta.controls.numeroTarjeta.dirty ||
@@ -97,7 +97,7 @@
                 <div class="col-7">
                     <mat-form-field style="width: 100%; color: white" appearance="outline" color="accent">
                         <mat-label>Fecha de vencim.</mat-label>
-                        <input formControlName="fechaVencimiento" matInput mask="00/0000" [dropSpecialCharacters]="false" />
+                        <input formControlName="fechaVencimiento" placeholder="09/2020" matInput mask="00/0000" [dropSpecialCharacters]="false" />
                         <mat-error *ngIf="
                 formTarjeta.controls.fechaVencimiento.invalid &&
                 (formTarjeta.controls.fechaVencimiento.dirty ||
