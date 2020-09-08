@@ -21,7 +21,7 @@
             <div class="mt-2 mx-4">
                 <mat-form-field style="width: 100%; color: white; margin-bottom: 0cm" appearance="outline" color="accent">
                     <mat-label>¿Con cuánto vas a pagar?</mat-label>
-                    <input formControlName="montoEfectivo" matInput prefix="$ " mask="0{8}" [dropSpecialCharacters]="false" />
+                    <input formControlName="montoEfectivo" matInput prefix="$ " mask="000000000" [dropSpecialCharacters]="false" [validation]="false" />
                     <mat-error *ngIf="
               formEfectivo.controls.montoEfectivo.invalid &&
               (formEfectivo.controls.montoEfectivo.dirty ||
