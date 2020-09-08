@@ -104,7 +104,28 @@ export class PagoComponent implements OnInit {
         localStorage.setItem("formaPago", "Tarjeta");
       }
     }
-
     this.router.navigate(["/resumen"]);
+  }
+
+  cancelar() {
+    swal({
+      title: "Confirmar",
+      text: "¿Estás seguro de cancelar tu pedido?",
+      icon: "warning",
+      buttons: ["No", "Sí"],
+      dangerMode: true,
+    }).then((cancelar) => {
+      if (cancelar) {
+        setTimeout(() => {
+          swal.close();
+          this.router.navigate(["/home"]);
+        }, 2000);
+        swal("Pedido cancelado!", {
+          icon: "success",
+          buttons: [false],
+        });
+        localStorage.clear();
+      }
+    });
   }
 }

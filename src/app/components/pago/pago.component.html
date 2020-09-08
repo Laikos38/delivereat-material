@@ -151,10 +151,14 @@
         </form>
     </div>
 
-    <div class="mx-3 my-3 d-flex justify-content-end" style="color: white" *ngIf="modo == 4 || modo == 5">
-        <button mat-raised-button color="accent" style="outline: none" (click)="validarForm()">
-      Continuar
-      <mat-icon>forward</mat-icon>
-    </button>
+    <div class="mx-3 mt-5 d-flex justify-content-center" style="color: white;" *ngIf="modo==4||modo==5">
+        <button mat-raised-button color="warn" (click)="cancelar()">
+            Cancelar
+            <mat-icon>close</mat-icon>
+        </button>
+        <button mat-raised-button class="ml-3" color="accent" style="outline: none;" (click)="validarForm()">
+            Continuar
+            <mat-icon>forward</mat-icon>
+        </button>
     </div>
 </div>
