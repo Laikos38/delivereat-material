@@ -410,6 +410,7 @@ export class LoqueseaComponent implements OnInit {
         }, 2000);
         swal("Pedido cancelado!", {
           icon: "success",
+          buttons: [false],
         });
         localStorage.clear();
       }
